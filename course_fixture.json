@@ -1,0 +1,1 @@
+[{"model": "lms.course", "pk": 1, "fields": {"name": "1", "description": "English", "preview": ""}}, {"model": "lms.course", "pk": 2, "fields": {"name": "Math", "description": "High math", "preview": ""}}, {"model": "lms.course", "pk": 3, "fields": {"name": "1", "description": "Something", "preview": ""}}]
