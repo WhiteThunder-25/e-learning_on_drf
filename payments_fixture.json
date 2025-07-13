@@ -1,1 +1,38 @@
-[{"model": "users.user", "pk": 1, "fields": {"password": "pbkdf2_sha256$600000$PjYFD5oSO2dYnGMtqM5ftX$6pxY/TxRojUEDoBkHQiCC4ejlchKTt8XjzjLWLSqDmw=", "last_login": "2025-07-13T03:17:47.239Z", "is_superuser": true, "first_name": "", "last_name": "", "is_staff": true, "is_active": true, "date_joined": "2025-07-13T03:10:51.258Z", "email": "", "avatar": "", "phone_number": null, "city": null, "groups": [], "user_permissions": []}}]
+[
+{
+    "model": "users.payment",
+    "pk": 5,
+    "fields": {
+        "user": 1,
+        "date": "2025-07-11",
+        "course": 2,
+        "lesson": null,
+        "amount": 50000,
+        "payment_method": "cash"
+    }
+},
+{
+    "model": "users.payment",
+    "pk": 6,
+    "fields": {
+        "user": 1,
+        "date": "2025-06-12",
+        "course": 3,
+        "lesson": 6,
+        "amount": 150000,
+        "payment_method": "transfer_to_account"
+    }
+},
+{
+    "model": "users.payment",
+    "pk": 7,
+    "fields": {
+        "user": 1,
+        "date": "2025-03-29",
+        "course": 1,
+        "lesson": 4,
+        "amount": 30000,
+        "payment_method": "transfer_to_account"
+    }
+}
+]
