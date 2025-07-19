@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from lms.models import Course, Lesson
 
 
 class User(AbstractUser):
@@ -24,8 +25,6 @@ class User(AbstractUser):
 
 
 class Payment(models.Model):
-    from lms.models import Course, Lesson
-
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь",
                              help_text="Выберите пользователя", related_name="payments")
     date = models.DateTimeField(verbose_name="Дата оплаты", auto_now_add=True)
