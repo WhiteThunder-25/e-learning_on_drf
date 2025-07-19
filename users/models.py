@@ -3,6 +3,8 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from lms.models import Course, Lesson
 
+from lms.models import Course, Lesson
+
 
 class User(AbstractUser):
     username = None
