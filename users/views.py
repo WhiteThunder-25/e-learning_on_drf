@@ -5,11 +5,11 @@ from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import AllowAny
 
 from users.models import Payment, User
-from users.serializers import PaymentSerializer, UserSerializer
+from users.serializers import PaymentSerializer, UserSerializer, UserRegisterSerializer
 
 
 class UserCreateAPIView(generics.CreateAPIView):
-    serializer_class = UserSerializer
+    serializer_class = UserRegisterSerializer
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
 

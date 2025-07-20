@@ -26,7 +26,7 @@ class Lesson(models.Model):
                                    null=True)
     preview = models.ImageField(upload_to="media/img/", verbose_name="Превью урока",
                                 help_text="Загрузите превью урока", blank=True, null=True)
-    video_link = models.CharField(verbose_name="Ссылка на урок", help_text="Добавьте ссылку на урок")
+    video_link = models.URLField(max_length=200, verbose_name="Ссылка на урок", help_text="Добавьте ссылку на урок")
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, verbose_name="Курс", help_text="Выберите курс",
                                related_name="lessons", blank=True, null=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Владелец",
