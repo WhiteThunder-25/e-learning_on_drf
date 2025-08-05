@@ -12,4 +12,3 @@ class Command(BaseCommand):
 
         call_command("loaddata", "payments_fixture.json")
         self.stdout.write(self.style.SUCCESS("Successfully loaded data from fixture"))
-        
