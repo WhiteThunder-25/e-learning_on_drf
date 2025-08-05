@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 
 class Course(models.Model):
     name = models.CharField(max_length=100, verbose_name="Курс", help_text="Введите название курса")
@@ -7,6 +9,8 @@ class Course(models.Model):
                                    null=True)
     preview = models.ImageField(upload_to="media/img/", verbose_name="Превью курса", help_text="Загрузите превью курса",
                                 blank=True, null=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Владелец",
+                              help_text="Выберите владельца курса", related_name="courses", null=True, blank=True)
 
     class Meta:
         verbose_name = "Курс"
@@ -22,9 +26,11 @@ class Lesson(models.Model):
                                    null=True)
     preview = models.ImageField(upload_to="media/img/", verbose_name="Превью урока",
                                 help_text="Загрузите превью урока", blank=True, null=True)
-    video_link = models.CharField(verbose_name="Ссылка на урок", help_text="Добавьте ссылку на урок")
+    video_link = models.URLField(max_length=200, verbose_name="Ссылка на урок", help_text="Добавьте ссылку на урок")
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, verbose_name="Курс", help_text="Выберите курс",
                                related_name="lessons", blank=True, null=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Владелец",
+                              help_text="Выберите владельца урока", related_name="lessons", null=True, blank=True)
 
     class Meta:
         verbose_name = "Урок"
@@ -32,4 +38,16 @@ class Lesson(models.Model):
 
     def __str__(self):
         return self.name
-    
+
+
+class Subscription(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь", related_name="subscriptions")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="Курс", related_name="subscriptions")
+    date = models.DateField(verbose_name="Дата подписки", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Подписка"
+        verbose_name_plural = "Подписки"
+
+    def __str__(self):
+        return f'Подписка на курс "{self.course.name}"'
