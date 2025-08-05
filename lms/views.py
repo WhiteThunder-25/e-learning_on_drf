@@ -15,6 +15,14 @@ class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     pagination_class = LessonCoursePagination
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if self.request.user.groups.filter(name="Moderators").exists():
+            return qs
+
+        return qs.filter(owner=self.request.user)
+
+
     def get_permissions(self):
         if self.action == "create":
             self.permission_classes = (IsAuthenticated, ~IsModerators)
@@ -34,13 +42,20 @@ class LessonCreateView(generics.CreateAPIView):
     serializer_class = LessonSerializer
     permission_classes = [IsAuthenticated, ~IsModerators]
 
+
     def perform_create(self, serializer):
         lesson = serializer.save(owner=self.request.user)
         lesson.save()
 
 
 class LessonListView(generics.ListAPIView):
-    queryset = Lesson.objects.all()
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if self.request.user.groups.filter(name="Moderators").exists():
+            return qs
+
+        return qs.filter(owner=self.request.user)
+
     serializer_class = LessonSerializer
     permission_classes = [IsAuthenticated, IsModerators | IsOwner]
     pagination_class = LessonCoursePagination
