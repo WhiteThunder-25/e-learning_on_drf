@@ -3,7 +3,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from lms.tasks import send_mail_about_update_course
 from lms.models import Course, Lesson, Subscription
 from lms.paginators import LessonCoursePagination
 from lms.serializers import CourseSerializer, LessonSerializer
@@ -36,6 +36,10 @@ class CourseViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         course = serializer.save(owner=self.request.user)
         course.save()
+
+    def perform_update(self, serializer):
+        course = serializer.save()
+        send_mail_about_update_course.delay(course_id=course.pk)
 
 
 class LessonCreateView(generics.CreateAPIView):
